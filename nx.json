@@ -1,7 +1,10 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
-    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "default": [
+      "{projectRoot}/**/*",
+      "sharedGlobals"
+    ],
     "production": [
       "default",
       "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
@@ -14,7 +17,6 @@
     ],
     "sharedGlobals": []
   },
-  "nxCloudId": "6728b541e2e2c04341f9edb2",
   "plugins": [
     {
       "plugin": "@nx/next/plugin",
@@ -29,7 +31,10 @@
       "plugin": "@nx/jest/plugin",
       "options": {
         "targetName": "test"
-      }
+      },
+      "exclude": [
+        "apps/server-e2e/**/*"
+      ]
     },
     {
       "plugin": "@nx/eslint/plugin",
@@ -44,6 +49,18 @@
         "style": "tailwind",
         "linter": "eslint"
       }
+    }
+  },
+  "targetDefaults": {
+    "@nx/esbuild:esbuild": {
+      "cache": true,
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "production",
+        "^production"
+      ]
     }
   }
 }
